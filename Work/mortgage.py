@@ -74,7 +74,7 @@ class Mortgage():
             "what number month would you like to start new payment amount? "))
         adjusted_house.extra_payment_end_month = int(input(
             "what number month would you like to end new payment amount? "))
-        
+
         adjusted_house.pay_off_deets()
 
         decision: str = input(
