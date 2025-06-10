@@ -2,7 +2,6 @@
 
 ''' Exercise 1.27 '''
 
-from csv import Error
 import os
 
 
@@ -28,7 +27,7 @@ class Porfolio():
                     shares = int(record_items[1])
                     price = float(record_items[2])
                     self.records.append((name, shares, price))
-                except Error as e:
+                except ValueError as e:
                     raise ValueError("records should be: tuple[str, str, str]") from e
 
     def total_value(self) -> float:
