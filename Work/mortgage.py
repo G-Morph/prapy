@@ -1,10 +1,10 @@
 # mortgage.py
-''' Exercise 1.7 '''
+''' Exercise 1.7 - 1.11 '''
 
 
 principal: float = 500_000.0
 rate: float = 0.05
-payment: float = 2684.11
+payment: float = 3684.11
 total_paid: float = 0.0
 
 while principal > 0:
