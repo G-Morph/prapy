@@ -3,7 +3,7 @@
 
 
 class Mortgage():
-    ''' mortgage stuff, bro '''
+    ''' handle and display mortgage details '''
     principal: float = 500_000
     rate: float = 0.05
     payment: float = 3_684.11
@@ -11,11 +11,11 @@ class Mortgage():
     months: int = 0
 
     def calculate_principal(self) -> float:
-        ''' helper to do math stuff '''        
+        ''' calculate new principal based on mortgage rate and monthly payment '''
         return self.principal * (1 + self.rate / 12) - self.payment
 
     def make_payment(self) -> None:
-        ''' helper to return new principal after adjusting for rate and payment '''
+        ''' handle monthly mortgage payments '''
         self.principal = self.calculate_principal()
         self.months += 1
         if self.months == 12:
