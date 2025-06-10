@@ -27,8 +27,8 @@ class Porfolio():
                     shares = int(record_items[1])
                     price = float(record_items[2])
                     self.records.append((name, shares, price))
-                except ValueError as e:
-                    raise ValueError("records should be: tuple[str, str, str]") from e
+                except ValueError as ve:
+                    raise ValueError("records should be: tuple[str, str, str]") from ve
 
     def total_value(self) -> float:
         ''' total value from all shares '''
