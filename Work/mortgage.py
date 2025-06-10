@@ -40,8 +40,22 @@ class Mortgage():
             self.payment += self.extra_payment
         elif self.months == self.extra_payment_end_month:
             self.payment -= self.extra_payment
+        check_principal = self.calculate_principal()
+
+        if check_principal < 0:
+            self.payment = self.principal * (1 + self.rate / 12)
+
         self.principal = self.calculate_principal()
+
         self.total_paid += self.payment
+
+        if (self.months in range(5)) or (self.principal < (self.payment * 4)):
+            print(f'{self.months},' + '\t' +
+                  f'{round(self.total_paid, 2):>10,.2f},' + '\t' +
+                  f'{round(self.principal, 2):>10,.2f}')
+            if self.months == 4:
+                print('...')
+
         self.months += 1
 
     def pay_off_deets(self, from_principal: bool = False) -> None:
@@ -57,7 +71,10 @@ class Mortgage():
         paid_house.months = months
         while paid_house.principal > 0:
             paid_house.make_payment()
-        print(f'${paid_house.total_paid:,.2f} in {paid_house.months} months')
+        print(
+            f'Total: ${paid_house.total_paid:,.2f}' + '\n' +
+            f'Years: {paid_house.months // 12}' + '\n' +
+            f'Months: {paid_house.months % 12}')
 
     def adjust_payment(self, from_principal: bool = False):
         ''' calculate mortgage data based on adjusting monthly payments '''
@@ -79,7 +96,7 @@ class Mortgage():
 
         decision: str = input(
             "Would you like to apply these changes?" + "\n")
-        if decision in ('y', 'yes', 'Y', 'Yes', 'YES'):
+        if decision.upper() in ('Y', 'YES'):
             self.extra_payment = adjusted_house.extra_payment
             self.extra_payment_start_month = adjusted_house.extra_payment_start_month
             self.extra_payment_end_month = adjusted_house.extra_payment_end_month
@@ -90,11 +107,4 @@ class Mortgage():
 original_house = (500_000, 0.05, 2684.11)
 mortgage = Mortgage(*original_house)
 mortgage.pay_off_deets()
-
-#for _ in range(12):
-#    mortgage.make_payment()
-#mortgage.pay_off_deets(from_principal=True)
-#mortgage.pay_off_deets(from_principal=False)
-
 mortgage.adjust_payment()
-mortgage.pay_off_deets()
