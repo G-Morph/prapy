@@ -12,7 +12,7 @@ class Mortgage():
 
     def calculate_principal(self) -> float:
         ''' calculate new principal based on mortgage rate and monthly payment '''
-        interest: float = 1 + self.rate / 12
+        interest: float = 1 + (self.rate / 12)  # divide the annual rate by month
         return self.principal * interest - self.payment
 
     def make_payment(self) -> None:
