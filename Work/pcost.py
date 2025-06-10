@@ -1,6 +1,9 @@
 # pcost.py
-#
-# Exercise 1.27
+
+''' Exercise 1.27 '''
+
+import os
+
 
 WORK: str = os.getcwd()
 CSVFILE: str = WORK + '\\Work\\Data\\portfolio.csv'
