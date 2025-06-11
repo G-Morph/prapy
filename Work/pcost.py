@@ -2,7 +2,6 @@
 
 ''' Exercise 1.27 '''
 
-import os
 import sys
 import textwrap
 
@@ -37,8 +36,8 @@ class Porfolio():
         ''' total value from all shares '''
         total_value: float = 0
         for record in self.records:
-            _, _, stock_price = record
-            total_value += stock_price
+            _, shares, stock_price = record
+            total_value += stock_price * shares
         # :.2f formats float string to 2 decimal places with 0 fill:
         #print(f"Total value:\t\t\t${round(total_value, 2):.2f}")
         res = textwrap.shorten(f"Total value: ${round(total_value, 2):.2f}", width=24)
@@ -52,12 +51,11 @@ class Porfolio():
             print(f"{name:^10} {shares:^10} ${price:^10.2f}")
 
 
-CWD: str = os.getcwd()
 CSVFILE: str = ""
 if len(sys.argv) == 2:
     CSVFILE = sys.argv[1]
 else:
-    CSVFILE = CWD + '\\Work\\Data\\portfolio.csv'
+    CSVFILE = 'Work\\Data\\portfolio.csv'
 
 with open(CSVFILE, encoding='utf-8') as csvfile:
     data_string: str = csvfile.read()
