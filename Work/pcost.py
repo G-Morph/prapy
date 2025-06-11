@@ -33,9 +33,6 @@ class Porfolio():
                     raise ValueError("records should be: tuple[str, str, str]") from ve
 
 
-# TODO: USE TEXTWRAP TO FIX ALL THE STUPID FORMATTING BULLSHIT
-
-
     def total_value(self) -> float:
         ''' total value from all shares '''
         total_value: float = 0
@@ -52,7 +49,7 @@ class Porfolio():
         ''' print each stock's name, number of shares, and total value '''
         for record in self.records:
             name, shares, price = record
-            print(f"{name}\t\t{shares}\t\t${price:.2f}")
+            print(f"{name:^10} {shares:^10} ${price:^10.2f}")
 
 
 CWD: str = os.getcwd()
