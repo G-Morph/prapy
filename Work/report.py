@@ -99,6 +99,11 @@ def print_pricelist(pricelist: list[tuple[float, str]]) -> None:
         print(f"${listing[0]:>6.2f} {listing[1]:>7}")
 
 
+def total_holdings(portfolio: list[dict[str, str|int|float]]):
+    ''' sum the total value of the portfolio '''
+    return sum([int(p['shares']) * float(p['price']) for p in portfolio])
+
+
 if __name__ == "__main__":
     # READ PORTFOLIO
     portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work\\Data\\portfolio.csv')
@@ -111,3 +116,11 @@ if __name__ == "__main__":
     # FUN WITH TUPLES:
     pricelist_ = list(zip(stocks_.values(), stocks_.keys()))
     print_pricelist(pricelist_)
+    # ARE YOU RICH?
+    print(f"Total portfolio value: ${total_holdings(portfolio_)}")
+    # WHO'S YER DADDY?
+    biggies = [(stock['name'], stock['shares'], stock['price'])
+               for stock in portfolio_
+               if float(stock['shares']) * float(stock['price']) > 10_000]
+    for biggie in biggies:
+        print(*biggie, sep='\t')
