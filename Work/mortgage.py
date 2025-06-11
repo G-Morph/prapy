@@ -3,11 +3,6 @@
 from copy import deepcopy
 
 
-# TODO: comment everything while you still remember how it works
-#       also, it looks like pylint doesn't like how many members
-#       are part of the Mortgage class, does it need to be
-#       simplified or broken up? check it nice
-
 class Mortgage():
     ''' handle and display mortgage details '''
     def __init__(self, principal: float, rate: float, payment: float):
