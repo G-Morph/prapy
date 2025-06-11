@@ -46,35 +46,39 @@ class Mortgage():
             self.payment -= self.extra_payment
         check_principal = self.calculate_principal()
 
+        # did you over pay for the last month?
         if check_principal < 0:
             self.payment = self.principal * (1 + self.rate / 12)
 
         self.principal = self.calculate_principal()
-
         self.total_paid += self.payment
 
+        # TODO: this should be a new method, print_mortgage():
         if (self.months in range(5)) or (self.principal < (self.payment * 4)):
             print(f'{self.months},' + '\t' +
                   f'{round(self.total_paid, 2):>10,.2f},' + '\t' +
                   f'{round(self.principal, 2):>10,.2f}')
             if self.months == 4:
                 print('...')
-
+        # every time you make a payment, it's been a month:
         self.months += 1
 
     def pay_off_deets(self, from_principal: bool = False) -> None:
         ''' calculate total money and time to pay off house '''
-        if from_principal:
+        if from_principal:  # starting with what you still owe, for refinancing
             starting_amount: float = self.principal
             months = self.months
         else: # from price
             starting_amount: float = self.price
             months = 0
+        # deepcopy so you don't bork the original:
         paid_house = deepcopy(self)
         paid_house.principal = starting_amount
         paid_house.months = months
+        # TODO: mock paying off the mortgage, do this with math instead of a loop:
         while paid_house.principal > 0:
             paid_house.make_payment()
+        # TODO: turn this into a sepreate print method:
         print(
             f'Total: ${paid_house.total_paid:,.2f}' + '\n' +
             f'Years: {paid_house.months // 12}' + '\n' +
@@ -86,7 +90,7 @@ class Mortgage():
             starting_amount: float = self.principal
         else: # from price
             starting_amount: float = self.price
-
+        # use this for demo, don't bork the original:
         adjusted_house = Mortgage(starting_amount, self.rate, self.payment)
 
         adjusted_house.extra_payment = float(input(
@@ -95,11 +99,11 @@ class Mortgage():
             "what number month would you like to start new payment amount? "))
         adjusted_house.extra_payment_end_month = int(input(
             "what number month would you like to end new payment amount? "))
-
+        # give 'em the info on the hypothetical mortgage:
         adjusted_house.pay_off_deets()
-
+        # ask if user wants to change it:
         decision: str = input(
-            "Would you like to apply these changes?" + "\n")
+            "Would you like to apply these changes? Enter a \"y\" or \"n\"" + "\n")
         if decision.upper() in ('Y', 'YES'):
             self.extra_payment = adjusted_house.extra_payment
             self.extra_payment_start_month = adjusted_house.extra_payment_start_month
