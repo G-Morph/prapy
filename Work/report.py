@@ -106,9 +106,9 @@ def total_holdings(portfolio: list[dict[str, str|int|float]]):
 
 if __name__ == "__main__":
     # READ PORTFOLIO
-    portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work\\Data\\portfolio.csv')
+    portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work/Data/portfolio.csv')
     # READ PRICES:
-    stocks_: dict[str, float] = read_prices('Work\\Data\\prices.csv')
+    stocks_: dict[str, float] = read_prices('Work/Data/prices.csv')
     # MAKE REPORT:
     report_: list[tuple[str, int, float, float]] = make_report(portfolio_, stocks_)
     # PRINT IT NICE:
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     pricelist_ = list(zip(stocks_.values(), stocks_.keys()))
     print_pricelist(pricelist_)
     # ARE YOU RICH?
-    print(f"Total portfolio value: ${total_holdings(portfolio_)}")
+    print(f"Total portfolio value: ${total_holdings(portfolio_):,}")
     # WHO'S YER DADDY?
     biggies = [(stock['name'], stock['shares'], stock['price'])
                for stock in portfolio_
