@@ -87,6 +87,18 @@ def print_report(report: list[tuple[str,int,float,float]]) -> None:
               f'{stock[3]:>10.2f}')
 
 
+def print_pricelist(pricelist: list[tuple[float, str]]) -> None:
+    ''' print a beautiful price list, organized from high to low price '''
+    pricelist.sort(reverse=True)
+    price = "Price"
+    name = "Name"
+    border = "-" * 7
+    print(f"{price:>7} {name:>7}")
+    print(border, border)
+    for listing in pricelist:
+        print(f"${listing[0]:>6.2f} {listing[1]:>7}")
+
+
 if __name__ == "__main__":
     # READ PORTFOLIO
     portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work\\Data\\portfolio.csv')
@@ -96,3 +108,6 @@ if __name__ == "__main__":
     report_: list[tuple[str, int, float, float]] = make_report(portfolio_, stocks_)
     # PRINT IT NICE:
     print_report(report_)
+    # FUN WITH TUPLES:
+    pricelist_ = list(zip(stocks_.values(), stocks_.keys()))
+    print_pricelist(pricelist_)
