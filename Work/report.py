@@ -4,7 +4,7 @@
 import csv
 
 
-def read_portfolio(csv_file: str) -> None:
+def read_portfolio(csv_file: str) -> list[dict[str, str|int|float]]:
     ''' parse/read portfolio csv file '''
 
     portfolio: list[dict[str, str|int|float]] = []
@@ -20,19 +20,7 @@ def read_portfolio(csv_file: str) -> None:
                 'shares': int(row[1]),
                 'price': float(row[2])}
             portfolio.append(holding)
-    # print it all out nice like:
-    print(
-        'Name' + '\t' +
-        'Shares' + '\t' +
-        'Price')
-    for holding in portfolio:
-        print(
-            f'{holding['name']}' + '\t' +
-            f'{holding['shares']}' + '\t' +
-            f'${holding['price']:.2f}')
-
-# call it to check it out:
-read_portfolio('Work\\Data\\portfolio.csv')
+    return portfolio
 
 
 def read_prices(csv_file: str) -> dict[str, float]:
@@ -49,5 +37,40 @@ def read_prices(csv_file: str) -> dict[str, float]:
                 stocks[row[0]] = float(row[1])
     return stocks
 
-# call it to check it out:
-prices = read_prices('Work\\Data\\prices.csv')
+
+
+def calculate_gain(
+    portfolio: list[dict[str, str|int|float]],
+    stocks: dict[str, float]) -> float:
+    ''' did you lose some or win some? '''
+
+    prev_total: float = 0
+    current_total: float = 0
+    for holding in portfolio:
+        prev_total += float(holding['price'])  # seems kludgey with all these float() casts
+        if holding['name'] in stocks.keys():
+            holding['price'] = float(stocks[str(holding['name'])])
+            current_total += float(holding['price'])
+
+    return current_total - prev_total
+
+
+
+# READ PORTFOLIO
+portfolio_ = read_portfolio('Work\\Data\\portfolio.csv')
+print(
+    'Name' + '\t' +
+    'Shares' + '\t' +
+    'Price')
+for holding_ in portfolio_:
+    print(
+        f'{holding_['name']}' + '\t' +
+        f'{holding_['shares']}' + '\t' +
+        f'${holding_['price']:.2f}')
+
+# READ PRICES:
+stocks_ = read_prices('Work\\Data\\prices.csv')
+print(f'IBM:\t${stocks_['IBM']:.2f}')
+
+# CALCULATE GAIN:
+print(f'gain:\t${calculate_gain(portfolio_, stocks_):.2f}')
