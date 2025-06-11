@@ -1,4 +1,3 @@
-# mortgage.py
 ''' Exercise 1.7 - 1.11 '''
 
 from copy import deepcopy
@@ -12,16 +11,16 @@ from copy import deepcopy
 class Mortgage():
     ''' handle and display mortgage details '''
     def __init__(self, principal: float, rate: float, payment: float):
-        self.principal = principal
-        self.rate = rate
-        self.payment = payment
-        self.price: float = principal
+        self.principal = principal  # what you pay every month going towards the mortgage
+        self.rate = rate  # the interest rate charged per year
+        self.payment = payment  # monthly payment = principal + (1 + rate/12)
+        self.price: float = principal  # the initial loan
 
-    total_paid: float = 0
-    months: int = 0
-    extra_payment_start_month: int = 0
-    extra_payment_end_month: int = 0
-    extra_payment: float = 0
+    total_paid: float = 0  # total paid towards the mortgage to date
+    months: int = 0  # how many months paid so far
+    extra_payment_start_month: int = 0  # in number of months since start of mortgage
+    extra_payment_end_month: int = 0  # in number of months since start of mortgage
+    extra_payment: float = 0  # in order to pay off mortgage earlier with less interest
 
     def __str__(self) -> str:
         return (
@@ -109,7 +108,8 @@ class Mortgage():
             print(self)
 
 
-original_house = (500_000, 0.05, 2684.11)
-mortgage = Mortgage(*original_house)
-mortgage.pay_off_deets()
-mortgage.adjust_payment()
+if __name__ == "__main__":
+    original_house = (500_000, 0.05, 2684.11)
+    mortgage = Mortgage(*original_house)
+    mortgage.pay_off_deets()
+    mortgage.adjust_payment()
