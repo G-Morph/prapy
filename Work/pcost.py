@@ -3,7 +3,6 @@
 ''' Exercise 1.27 '''
 
 import sys
-import textwrap
 
 
 class Porfolio():
@@ -38,10 +37,7 @@ class Porfolio():
         for record in self.records:
             _, shares, stock_price = record
             total_value += stock_price * shares
-        # :.2f formats float string to 2 decimal places with 0 fill:
         #print(f"Total value:\t\t\t${round(total_value, 2):.2f}")
-        res = textwrap.shorten(f"Total value: ${round(total_value, 2):.2f}", width=24)
-        print(res)
         return total_value
 
     def print_portfolio(self) -> None:
