@@ -12,24 +12,22 @@ class Porfolio():
         self.portfolio_string = portfolio_string
         self.parse_portfolio_string()
 
-    column_titles = None  # tuple of strings ('','','')
     records: list[tuple[str, int, float]] = []
 
     def parse_portfolio_string(self) -> None:
         ''' split the CSV file into members '''
-        data_lines = data_string.split('\n')
-        self.column_titles = tuple(data_lines[0].split(','))
-        for line in data_lines[1:]:
-            record_items = line.split(',')
-            if len(record_items) == 3:
+        data_lines = self.portfolio_string.split('\n')
+        header = tuple(data_lines[0].split(','))  # how to know if there's a header?
+        for index, line in enumerate(data_lines[1:]):
+            if line:
+                record = dict(zip(header, line.split(',')))
                 try:
-                    name: str = record_items[0]
-                    shares = int(record_items[1])
-                    price = float(record_items[2])
+                    name: str = record['name']
+                    shares = int(record['shares'])
+                    price = float(record['price'])
                     self.records.append((name, shares, price))
                 except ValueError as ve:
-                    raise ValueError("records should be: tuple[str, str, str]") from ve
-
+                    raise ValueError(f"Row {index}: Couldn't convert: {line}") from ve
 
     def total_value(self) -> float:
         ''' total value from all shares '''
@@ -37,25 +35,25 @@ class Porfolio():
         for record in self.records:
             _, shares, stock_price = record
             total_value += stock_price * shares
-        #print(f"Total value:\t\t\t${round(total_value, 2):.2f}")
         return total_value
 
     def print_portfolio(self) -> None:
         ''' print each stock's name, number of shares, and total value '''
         for record in self.records:
             name, shares, price = record
-            print(f"{name:^10} {shares:^10} ${price:^10.2f}")
+            print(f"{name:>10} {shares:^10} ${price:<10.2f}")
 
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        csvfile: str = sys.argv[1]
+    else:
+        #csvfile = 'Work\\Data\\portfolio.csv'
+        #csvfile: str = 'Work\\Data\\missing.csv'
+        csvfile: str = 'Work\\Data\\portfoliodate.csv'
 
-CSVFILE: str = ""
-if len(sys.argv) == 2:
-    CSVFILE = sys.argv[1]
-else:
-    CSVFILE = 'Work\\Data\\portfolio.csv'
+    with open(csvfile, encoding='utf-8') as f:
+        data_string: str = f.read()
 
-with open(CSVFILE, encoding='utf-8') as csvfile:
-    data_string: str = csvfile.read()
-
-portfolio = Porfolio(data_string)
-portfolio.print_portfolio()
-portfolio_value: float = portfolio.total_value()
+    portfolio = Porfolio(data_string)
+    portfolio.print_portfolio()
+    portfolio_value: float = portfolio.total_value()
