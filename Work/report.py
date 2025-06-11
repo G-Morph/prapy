@@ -6,9 +6,7 @@ import csv
 
 def read_portfolio(csv_file: str) -> list[dict[str, str|int|float]]:
     ''' parse/read portfolio csv file '''
-
     portfolio: list[dict[str, str|int|float]] = []
-
     with open(csv_file, 'rt', encoding='utf-8') as f:
         rows = csv.reader(f)
         # this pops the header line, prior knowledge of file needed for this stuff:
@@ -25,10 +23,8 @@ def read_portfolio(csv_file: str) -> list[dict[str, str|int|float]]:
 
 def read_prices(csv_file: str) -> dict[str, float]:
     ''' read prices of other stocks in a csv file '''
-
     # 'name' = 'price'
     stocks: dict[str, float] = {}
-
     with open(csv_file, 'rt', encoding='utf-8') as f:
         rows = csv.reader(f)
         # no headers in this file (Work\Data\prices.csv)
@@ -38,22 +34,23 @@ def read_prices(csv_file: str) -> dict[str, float]:
     return stocks
 
 
-
-def calculate_gain(
+def calculate_gain(  # should be called update_portfolio()
     portfolio: list[dict[str, str|int|float]],
-    stocks: dict[str, float]) -> float:
-    ''' did you lose some or win some? '''
-
+    stocks: dict[str, float]
+    ) -> tuple[float, float, float]:
+    ''' did you lose some or win some? also, update portfolio with new prices '''
     prev_total: float = 0
     current_total: float = 0
     for holding in portfolio:
-        prev_total += float(holding['price'])  # seems kludgey with all these float() casts
+        # seems kludgey with all these float() casts
+        # update prev total, for calculating gain/loss
+        prev_total += float(holding['price']) * int(holding['shares'])
         if holding['name'] in stocks.keys():
+            # update the holding dict with the new price
             holding['price'] = float(stocks[str(holding['name'])])
-            current_total += float(holding['price'])
-
-    return current_total - prev_total
-
+            # update current total with new price
+            current_total += float(holding['price']) * int(holding['shares'])
+    return (prev_total, current_total, current_total - prev_total)
 
 
 # READ PORTFOLIO
@@ -72,5 +69,9 @@ for holding_ in portfolio_:
 stocks_ = read_prices('Work\\Data\\prices.csv')
 print(f'IBM:\t${stocks_['IBM']:.2f}')
 
-# CALCULATE GAIN:
-print(f'gain:\t${calculate_gain(portfolio_, stocks_):.2f}')
+# UPDATE AND CALCULATE GAIN:
+prev_total_, current_total_, gain_ = calculate_gain(portfolio_, stocks_)
+print(
+    f'Previous total: ${prev_total_:.2f}' + '\n'
+    f'Current total: ${current_total_:.2f}' + '\n'
+    f'Gain: ${gain_:.2f}')
