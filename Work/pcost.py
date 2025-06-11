@@ -47,9 +47,9 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
         csvfile: str = sys.argv[1]
     else:
-        #csvfile = 'Work\\Data\\portfolio.csv'
-        #csvfile: str = 'Work\\Data\\missing.csv'
-        csvfile: str = 'Work\\Data\\portfoliodate.csv'
+        #csvfile = 'Work/Data/portfolio.csv'
+        #csvfile: str = 'Work/Data/missing.csv'
+        csvfile: str = 'Work/Data/portfoliodate.csv'
 
     with open(csvfile, encoding='utf-8') as f:
         data_string: str = f.read()
