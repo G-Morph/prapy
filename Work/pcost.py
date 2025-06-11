@@ -3,6 +3,8 @@
 ''' Exercise 1.27 '''
 
 import os
+import sys
+import textwrap
 
 
 class Porfolio():
@@ -30,6 +32,10 @@ class Porfolio():
                 except ValueError as ve:
                     raise ValueError("records should be: tuple[str, str, str]") from ve
 
+
+# TODO: USE TEXTWRAP TO FIX ALL THE STUPID FORMATTING BULLSHIT
+
+
     def total_value(self) -> float:
         ''' total value from all shares '''
         total_value: float = 0
@@ -37,18 +43,24 @@ class Porfolio():
             _, _, stock_price = record
             total_value += stock_price
         # :.2f formats float string to 2 decimal places with 0 fill:
-        print(f"Total value:    ${round(total_value, 2):.2f}")
+        #print(f"Total value:\t\t\t${round(total_value, 2):.2f}")
+        res = textwrap.shorten(f"Total value: ${round(total_value, 2):.2f}", width=24)
+        print(res)
         return total_value
 
     def print_portfolio(self) -> None:
         ''' print each stock's name, number of shares, and total value '''
         for record in self.records:
             name, shares, price = record
-            print(f"{name}\t {shares:>3}\t ${price:.2f}\t")
+            print(f"{name}\t\t{shares}\t\t${price:.2f}")
 
 
 CWD: str = os.getcwd()
-CSVFILE: str = CWD + '\\Work\\Data\\portfolio.csv'
+CSVFILE: str = ""
+if len(sys.argv) == 2:
+    CSVFILE = sys.argv[1]
+else:
+    CSVFILE = CWD + '\\Work\\Data\\portfolio.csv'
 
 with open(CSVFILE, encoding='utf-8') as csvfile:
     data_string: str = csvfile.read()
