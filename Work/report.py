@@ -89,10 +89,10 @@ def print_report(report: list[tuple[str,int,float,float]]) -> None:
 
 if __name__ == "__main__":
     # READ PORTFOLIO
-    portfolio_ = read_portfolio('Work\\Data\\portfolio.csv')
+    portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work\\Data\\portfolio.csv')
     # READ PRICES:
-    stocks_ = read_prices('Work\\Data\\prices.csv')
+    stocks_: dict[str, float] = read_prices('Work\\Data\\prices.csv')
     # MAKE REPORT:
-    report_ = make_report(portfolio_, stocks_)
+    report_: list[tuple[str, int, float, float]] = make_report(portfolio_, stocks_)
     # PRINT IT NICE:
     print_report(report_)
