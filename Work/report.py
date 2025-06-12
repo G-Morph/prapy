@@ -105,7 +105,8 @@ def total_holdings(portfolio: list[dict[str, str|int|float]]):
     return sum([int(p['shares']) * float(p['price']) for p in portfolio])
 
 
-if __name__ == "__main__":
+def print_final_report() -> None:
+    ''' present all the data and stuff '''
     # READ PORTFOLIO
     portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work/Data/portfolio.csv')
     # READ PRICES:
@@ -125,3 +126,6 @@ if __name__ == "__main__":
                if float(stock['shares']) * float(stock['price']) > 10_000]
     for biggie in biggies:
         print(*biggie, sep='\t')
+
+if __name__ == "__main__":
+    print_final_report()
