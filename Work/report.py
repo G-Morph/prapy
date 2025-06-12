@@ -105,12 +105,12 @@ def total_holdings(portfolio: list[dict[str, str|int|float]]):
     return sum([int(p['shares']) * float(p['price']) for p in portfolio])
 
 
-def print_final_report() -> None:
+def print_final_report(portfolio_path: str, stocks_path: str) -> None:
     ''' present all the data and stuff '''
     # READ PORTFOLIO
-    portfolio_: list[dict[str, str|int|float]] = read_portfolio('Work/Data/portfolio.csv')
+    portfolio_: list[dict[str, str|int|float]] = read_portfolio(portfolio_path)
     # READ PRICES:
-    stocks_: dict[str, float] = read_prices('Work/Data/prices.csv')
+    stocks_: dict[str, float] = read_prices(stocks_path)
     # MAKE REPORT:
     report_: list[tuple[str, int, float, float]] = make_report(portfolio_, stocks_)
     # PRINT IT NICE:
@@ -128,4 +128,6 @@ def print_final_report() -> None:
         print(*biggie, sep='\t')
 
 if __name__ == "__main__":
-    print_final_report()
+    print_final_report(
+        'Work/Data/portfolio2.csv',
+        'Work/Data/prices.csv')
