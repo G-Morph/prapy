@@ -35,16 +35,13 @@ def parse_portfolio_string(filepath: str) -> list:
         types = [str, int, float]  # for auto-casting later
         for index, row in enumerate(rows):
             if row:
-                # TODO: get this into comprehension
-                values = zip(types, row)
-                record = dict(zip(header, values))
+                casted = [func(val) for func, val in zip(types, row)]
+                record = dict(zip(header, casted))
                 try:
-                    name = record['name'][TYPE](record['name'][VALUE])  # cast as string
-                    shares = record['shares'][TYPE](record['shares'][VALUE])  # cast as int
-                    price = record['price'][TYPE](record['price'][VALUE])  # cast as float
-                    records.append((name, shares, price))
+                    records.append(record)
                 except ValueError as ve:
                     raise ValueError(f"Row {index}: Couldn't convert: {row}") from ve
     return records
 
-print(parse_portfolio_string('Work/Data/portfolio.csv'))
+if __name__ == "__main__":
+    print(parse_portfolio_string('Work/Data/portfolio.csv'))
