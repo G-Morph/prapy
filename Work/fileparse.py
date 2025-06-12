@@ -5,11 +5,14 @@ import csv
 
 def parse_csv(
     filename: str,
-    select = None
+    select: list[str] | None = None,
+    types: list[type] | None = None
     ) -> list:
     ''' parse a csv file into a list of records '''
     if select is None:
         select = ['name', 'shares']
+    if types is None:
+        types = [str, int, float]
     records = []
     with open(filename, encoding='utf-8') as f:
         rows = csv.reader(f)
