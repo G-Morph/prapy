@@ -26,14 +26,20 @@ def parse_csv(
 
 
 if __name__ == "__main__":
-    print(parse_csv(
+    res = parse_csv(
+        'Work/Data/portfolio.csv',
+        select=['name', 'price'])
+    for line in res:
+        print(line)
+
+    res = parse_csv(
         "Work/Data/portfolio.csv",
-        select=['name', 'price']
-    ))
-    print(parse_csv(
-        "Work/Data/portfolio.csv",
-        select=['shares']
-    ))
-    print(parse_csv(
-        "Work/Data/portfolio.csv",
-    ))
+        select=['shares'])
+    for line in res:
+        print(line)
+
+    res = parse_csv(
+        "Work/Data/portfolio.csv"
+    )
+    for line in res:
+        print(line)
