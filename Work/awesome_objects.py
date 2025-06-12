@@ -26,7 +26,7 @@ except objects[2] as ve:
     print(ve)
 
 
-def parse_portfolio_string(filepath: str) -> list:
+def parse_portfolio_csv(filepath: str) -> list:
     ''' split the CSV file into members '''
     records = []
     with open(filepath, 'rt', encoding='utf-8') as f:
@@ -44,4 +44,4 @@ def parse_portfolio_string(filepath: str) -> list:
     return records
 
 if __name__ == "__main__":
-    print(parse_portfolio_string('Work/Data/portfolio.csv'))
+    print(parse_portfolio_csv('Work/Data/portfolio.csv'))
