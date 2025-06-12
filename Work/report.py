@@ -6,6 +6,7 @@ import csv
 def read_portfolio(csv_file: str) -> list[dict[str, str|int|float]]:
     ''' parse/read portfolio csv file '''
     portfolio: list[dict[str, str|int|float]] = []
+    types = [str, int, float]
     with open(csv_file, 'rt', encoding='utf-8') as f:
         rows = csv.reader(f)
         # this pops the header line, prior knowledge of file needed for this stuff:
@@ -15,9 +16,9 @@ def read_portfolio(csv_file: str) -> list[dict[str, str|int|float]]:
             try:
                 record = dict(zip(header, row))
                 holding = {
-                    'name': record['name'],
-                    'shares': int(record['shares']),
-                    'price': float(record['price'])}
+                    'name': types[0](record['name']),
+                    'shares': types[1](record['shares']),
+                    'price': types[2](record['price'])}
                 portfolio.append(holding)
             except ValueError as ve:
                 raise ValueError(f"Row: {index}, couldn't convert: {row}") from ve
