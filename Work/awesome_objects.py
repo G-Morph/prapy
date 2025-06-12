@@ -31,7 +31,7 @@ def parse_portfolio_csv(filepath: str) -> list:
         header = next(rows)  # hopefully, there's a header!
         types = [str, int, float]  # for auto-casting later
         for index, row in enumerate(rows):
-            if row:
+            if row:  # convert to correct data type, then make record
                 casted = [func(val) for func, val in zip(types, row)]
                 record = dict(zip(header, casted))
                 try:
