@@ -12,6 +12,9 @@ def parse_csv(
     ) -> list:
     ''' parse a csv file into a list of records '''
 
+    if select and not has_header:
+        raise ValueError("You fucked up")
+
     if select is None:
         select = ['name', 'shares']
     if types is None:
@@ -83,3 +86,9 @@ if __name__ == "__main__":
         "Work/Data/portfolio.dat",
         delimiter=' '
     )
+
+    # raise an error:
+    res = parse_csv(
+        "Work/Data/portfolio.dat",
+        has_header=False,
+        select=['name', 'price'])
