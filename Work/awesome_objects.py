@@ -31,10 +31,11 @@ def parse_portfolio_string(filepath: str) -> list:
     records = []
     with open(filepath, 'rt', encoding='utf-8') as f:
         rows = csv.reader(f)
-        header = next(rows)
-        types = [str, int, float]
+        header = next(rows)  # hopefully, there's a header!
+        types = [str, int, float]  # for auto-casting later
         for index, row in enumerate(rows):
             if row:
+                # TODO: get this into comprehension
                 values = zip(types, row)
                 record = dict(zip(header, values))
                 try:
