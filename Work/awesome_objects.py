@@ -4,9 +4,6 @@ import csv
 import math
 
 
-TYPE, VALUE = (0, 1)
-
-
 objects = [abs, math, ValueError]
 print(objects)
 
