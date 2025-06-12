@@ -67,8 +67,15 @@ if __name__ == "__main__":
     for line in res:
         print(line)
 
+    # for a csv file with no headers:
+    res = parse_csv(
+        "Work/Data/prices.csv",
+        has_header=False,
+        types=[str, float]
+    )
 
-## for a csv file with no headers:
-#res = parse_csv(
-#    "Work/"
-#)
+    # dat file with spaces as delimiter:
+    res = parse_csv(
+        "Work/Data/portfolio.dat",
+        delimiter=' '
+    )
