@@ -49,18 +49,22 @@ def parse_csv(
 
 
 if __name__ == "__main__":
+
+    # non-default select args:
     res = parse_csv(
         'Work/Data/portfolio.csv',
         select=['name', 'price'])
     for line in res:
         print(line)
 
+    # only select one parameter:
     res = parse_csv(
         "Work/Data/portfolio.csv",
         select=['shares'])
     for line in res:
         print(line)
 
+    # no optional args:
     res = parse_csv(
         "Work/Data/portfolio.csv"
     )
